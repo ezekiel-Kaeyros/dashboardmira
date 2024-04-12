@@ -1,0 +1,37 @@
+@import "home_card";
+
+.home {
+
+  .home__header {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 1rem;
+
+    .title--colored {
+      color: #4F06F9
+    }
+  }
+
+  .home__overview {
+    .overview__title {
+      margin-top: 1em;
+      font-size: 18px;
+      color: gray;
+    }
+    .cards_app_overview__list {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+  }
+
+  .home__wrapper {
+    width: 90%;
+    display: flex;
+    gap: 4rem;
+
+  }
+}

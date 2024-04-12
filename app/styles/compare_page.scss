@@ -1,0 +1,31 @@
+.compare_page {
+  height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.compare_page1 {
+  border:2px dashed #828B8C;
+  width:85%; height:400px;
+  border-radius:10px;
+  background:#E0FFFF;
+  display:flex;
+  align-items: center;
+}
+
+.compare_page2 {
+  width:20%;
+  height:30%;
+  margin:auto;
+  text-align:center;
+}
+
+.periods{
+  display: flex;
+  .period_right{
+    margin-left: 160px;
+  }
+
+}
+

@@ -1,0 +1,22 @@
+.compare_card {
+  border-radius: 8px;
+  padding: 0 1rem;
+  border: 1px solid rgb(220, 220, 220);
+  margin: auto;
+  max-width: 900px;
+  height: 400px;
+  align-items: center;
+
+  &__header {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      font-weight: bold;
+      font-size: 16px;
+      margin: auto;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import "cards";
+@import "compare";
+@import "layouts";
+@import "home_page";
+@import "recent";
+@import "compare_page";
+@import "more_compare_page";
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+

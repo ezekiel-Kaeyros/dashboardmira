@@ -1,0 +1,12 @@
+name: anti_d_mira
+title: anti_d_mira
+username: excelapps
+account: excelapps
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11541968
+bundleId: 8396172
+url: https://excelapps.shinyapps.io/anti_d_mira/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
