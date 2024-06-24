@@ -56,6 +56,7 @@
 }
 
 .qualitative_page {
+  display: flex;
   height: 100%;
   max-width: 100%;
 
@@ -86,8 +87,8 @@
 }
 
 #export_quantitative{
-  height: 48px;
-  top: 1px;
+  height: 62px;
+  top: -4px;
   margin: 5px;
   background-color: #2B8049;
   color: #fff;
@@ -95,8 +96,8 @@
 }
 
 #export_bivariate{
-  height: 48px;
-  top: 1px;
+  height: 62px;
+  top: -4px;
   margin: 5px;
   background-color: #2B8049;
   color: #fff;

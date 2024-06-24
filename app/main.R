@@ -29,10 +29,10 @@ ui <- function(id) {
   #ns <- NS(id)
   fluentPage(
     shinyjs::useShinyjs(),
-    shiny.fluent::DefaultButton.shinyInput("refresh", "Refresh data",
-                                           iconProps = list(iconName = "Refresh"),
-                                           style = "float: left; height: 48px; top: 1px; margin: 5px;
-                                           background-color: #2B8049; color: #fff; border-radius: 12px;"),
+    # shiny.fluent::DefaultButton.shinyInput("refresh", "Refresh data",
+    #                                        iconProps = list(iconName = "Refresh"),
+    #                                        style = "float: left; height: 48px; top: 1px; margin: 5px;
+    #                                        background-color: #2B8049; color: #fff; border-radius: 12px;"),
     div(
       style = "visibility: hidden;",
       downloadButton("download", label = "", verify_fa=FALSE)

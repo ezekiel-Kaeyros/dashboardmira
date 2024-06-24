@@ -17,7 +17,8 @@ box::use(
   #lubridate[format],
   utils[head, tail],
   httr[GET, content, http_status],
-  slam[row_sums]
+  slam[row_sums],
+  janitor[clean_names], stats, tidyr
 )
 
 box::use(
@@ -39,8 +40,17 @@ path_data <- paste(root, "/", "app/data/", sep="")
 
 #""""""""""""""""""""""""""""""""""""""""""""""""""""""
 connection_string <- "mongodb+srv://mira-user:2qr3fxQ6m4v8QK25@mira-db.dpvok4h.mongodb.net/?retryWrites=true&w=majority&appName=mira-db"
+
+################## Secret Key
+key <- "Anti-D-2024"
+################# define viewer role
+role <- 2
+
+############## Fetch reports datas
 data <- fetch_mongodb(connection_string = connection_string, db="test", collection = "reports")
 
+############## Fetch login datas
+login_data <- fetch_mongodb(connection_string = connection_string, collection = "users", db="test")
 
 ################## prepocessing of data ####################
 data$dateState <- as.Date(substr(data$dateState, 1, 10), format = "%Y-%m-%d")

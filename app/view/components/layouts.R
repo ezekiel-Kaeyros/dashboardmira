@@ -77,20 +77,23 @@ home_layout <- function(home_data_overview,home_recent) {
 # tl: top left card; tr_card: top right card; bl: bottom left card; br: bottom right card
 
 #' @export
-quantitative_page_layout <- function(head, tl_card, bl_card, middle_card,mid_card, tr_card, br_card, mid_b_card, mid_b_card1) {#mid_card
+quantitative_page_layout <- function(head, tl_card, bl_card, middle_card,mid_card, tr_card, br_card, mid_b_card, mid_b_card1, token) {#mid_card
   column_options <- c('column 1', 'column 2', 'column 3')
 
   div(class = "quantitative_page",
+      div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                 iconProps = list(iconName = "Refresh"),
+                                                 style = "float: left; height: 48px; top: 1px; margin: 5px;
+                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
       head,
       div(class = "head_section",
           h1(class = "quantitative_page__title", ""), #Quantitative statistics
-          div( style = "float: right;  gap: 0.5rem;",
-               shiny.fluent::Link(href="#!/quantitative_bivariate", "Go to Bivariate",
-                                  style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                                 text-align: center; border-color: #000; border-radius: 12px;
-                                 border: 1px solid black;
-                                color: #000; font-weight: bold;"),
-               shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Export data",
+          div( style = "float: right; display: flex; gap: 0.5rem;",
+               shiny.fluent::Link(href=paste("#!/quantitative_bivariate?token=", token, sep = ""), "Weiter zu Bivariate",
+                                  style = "background-color: #fff; text-decoration:none; padding: 1.5em 1.5em;
+                        border-color: #000; border-radius: 12px; display: flex;
+                        border: 1px solid black; color: #000; font-weight: bold;"),
+               shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Daten exportieren",
                                                       iconProps = list(iconName = "Download"))
 
           ),
@@ -116,18 +119,21 @@ quantitative_page_layout <- function(head, tl_card, bl_card, middle_card,mid_car
 }
 
 #' @export
-quantitative_bivariate_layout <- function(tl_card, bl_card,tr_card, br_card) {#mid_card
+quantitative_bivariate_layout <- function(tl_card, bl_card,tr_card, br_card, token) {#mid_card
   div(class = "quantitative_bivariate",
+      div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                 iconProps = list(iconName = "Refresh"),
+                                                 style = "float: left; height: 48px; top: 1px; margin: 5px;
+                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
       div(class = "head_section",
           h1(class = "quantitative_page__title", ""), #Quantitative Bivariate
-          div( style = "float: right;  gap: 0.5rem;",
-               shiny.fluent::Link(href="#!/quantitative", "Quantitative",
-                                  style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                            text-align: center; border-color: #000; border-radius: 12px;
-                            border: 1px solid black;
-                           color: #000; font-weight: bold;"),
-               shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Export data",
-                                                      iconProps = list(iconName = "Download"))
+          div(style = "float: right; display: flex; gap: 0.5rem;",
+              shiny.fluent::Link(href=paste("#!/quantitative?token=", token, sep = ""), "Quantitativ",
+                                 style = "background-color: #fff; text-decoration:none; padding: 1.5em 1.5em;
+                        border-color: #000; border-radius: 12px; display: flex;
+                        border: 1px solid black; color: #000; font-weight: bold;"),
+              shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Daten exportieren",
+                                                     iconProps = list(iconName = "Download"))
           ),
       ),
       div(class = "quantitative_bivariate__content",
@@ -144,44 +150,54 @@ quantitative_bivariate_layout <- function(tl_card, bl_card,tr_card, br_card) {#m
   )
 }
 
+
 #' @export
-qualitative_layout <- function(card) {#mid_card
+qualitative_layout <- function(card, token) {#mid_card
   div(class = "qualitative_page",
-      div(
-        style = "float: right;",
-        shiny.fluent::Link(href="#!/wordcloud", "See Wordcloud",
-                           style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                            text-align: center; border-color: #000; border-radius: 12px;
-                            border: 1px solid black;
-                           color: #000; font-weight: bold;") #img(src = "./icons/doublesw.svg", style ="float: left;")
-      ),
+      div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                 iconProps = list(iconName = "Refresh"),
+                                                 style = "float: left; height: 48px; top: 1px; margin: 5px;
+                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
       h1(class = "qualitative_page__title",  ""), #Qualitative view
       div(class = "qualitative_page__content",
           div(class = "qualitative_page_middle",
               card
           )
-      )
+      ),
+      div(
+        style = "float: right;display: flex; gap: 0.5rem;",
+        div(),
+        shiny.fluent::Link(href=paste("#!/wordcloud?token=", token, sep = ""), "Siehe Wordcloud",
+                           style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
+                            text-align: center; border-color: #000; border-radius: 12px;
+                            border: 1px solid black;
+                           color: #000; font-weight: bold;") #img(src = "./icons/doublesw.svg", style ="float: left;")
+      ),
 
   )
 }
 
 #' @export
-wordcloud_layout <- function(card) {#mid_card
+wordcloud_layout <- function(card, token) {#mid_card
   div(class = "qualitative_page",
-      div(
-        style = "float: right;",
-        shiny.fluent::Link(href="#!/qualitative", "See Qualitative",
-                           style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                            text-align: center; border-color: #000; border-radius: 12px;
-                            border: 1px solid black;
-                           color: #000; font-weight: bold;")
-      ),
+      div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                 iconProps = list(iconName = "Refresh"),
+                                                 style = "float: left; height: 48px; top: 1px; margin: 5px;
+                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
       h1(class = "qualitative_page__title",  ""), #Wordcloud view
       div(class = "qualitative_page__content",
           div(class = "qualitative_page_middle",
               card
           )
-      )
+      ),
+      div(
+        style = "float: right; display: flex; gap: 0.5rem;",
+        shiny.fluent::Link(href= paste("#!/qualitative?token=", token, sep = ""), "Siehe Qualitativ",
+                           style = "background-color: #fff; text-decoration:none; padding: 1em 1.5em;
+                            text-align: center; border-color: #000; border-radius: 12px;
+                            border: 1px solid black;
+                           color: #000; font-weight: bold;")
+      ),
 
   )
 }

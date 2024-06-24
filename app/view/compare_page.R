@@ -26,23 +26,9 @@ box::use(
 #' @export
 ui <- function(id){
   ns <- NS(id)
+  shinyjs::useShinyjs()
+  shiny::uiOutput(ns("ui"))
 
-  div(class = "compare_page",
-      div(class="compare_page1",
-          div(class= "compare_page2",
-              tagList(
-                #shinyjs::useShinyjs(),
-                h3("Choose to compare"),
-                paste("Click to choose variable"),
-                tags$br(),
-                DefaultButton.shinyInput(ns("showmodal"), text = "Choose",styles = list("background: ##F0FFF0")),
-                reactOutput(ns("modal"))
-                #reactOutput(ns("modal")),
-                #reactOutput(ns("page_ok"))
-              )
-          )
-      )
-  )
 }
 
 #' @export
@@ -51,6 +37,44 @@ server <- function(id) {
     ns <- session$ns
 
     shinyjs::useShinyjs()
+
+    current_token <- shiny::reactive({
+      token <- shiny.router::get_query_param("token", session)
+      if(is.null(token)){
+        token <- "404"
+      }else{
+        token <- token
+      }
+      token
+    })
+    output$ui <- shiny::renderUI({
+      ############# Decode JWT
+      token_json_data <- jose::jwt_decode_hmac(current_token(), secret = import_data$key)
+
+      ############ Detect validity time of token
+      converted_time <- as.POSIXct(token_json_data$exp, origin="1970-01-01", tz="Africa/Lagos")
+
+      if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
+        div(class = "compare_page",
+            div(class="compare_page1",
+                div(class= "compare_page2",
+                    tagList(
+                      #shinyjs::useShinyjs(),
+                      h3("Choose to compare"),
+                      paste("Click to choose variable"),
+                      tags$br(),
+                      DefaultButton.shinyInput(ns("showmodal"), text = "Choose",styles = list("background: ##F0FFF0")),
+                      reactOutput(ns("modal"))
+                      #reactOutput(ns("modal")),
+                      #reactOutput(ns("page_ok"))
+                    )
+                )
+            )
+        )
+      } else{
+        shiny::h3("Error 500 - Internal Server Error")
+      }
+    })
 
     modalVisible <- reactiveVal(FALSE)
 
@@ -108,7 +132,7 @@ server <- function(id) {
 
     observeEvent(input$okay1, {
       modalVisible(FALSE)
-      shinyjs::runjs("window.location.href = '#!/more_compare';")
+      shinyjs::runjs(paste("window.location.href = '#!/more_compare?token=", current_token(), "';", sep = ""))
     })
 
     date1_react <-reactiveVal(NULL)

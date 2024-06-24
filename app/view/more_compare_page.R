@@ -32,35 +32,8 @@ data2 <- shiny::reactiveFileReader(1000, NULL, "app/data/data2.rds", readRDS)
 #' @export
 ui <- function(id){
   ns <- NS(id)
-
-  Stack(
-    tokens = list(childrenGap = 10), horizontal = TRUE,
-    cards$makeCard(div(class="text1",""
-                       #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
-    ),
-    #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-    #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-
-    div(style="max-height: 500px;", uiOutput(ns("table1")))),
-    div(class="margin_l"),
-    div(class="more_compare_page"),
-    div(class="margin_r"),
-    cards$makeCard(div(class="text1",""
-                       #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
-    ),
-    #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-    #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-    div(style="max-height: 500px;", uiOutput(ns("table2")))),
-
-    div(
-      shiny.fluent::Link(href="#!/compare", "Go Back",
-                         style = "float: right; background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                            text-align: center; border-color: #000; border-radius: 12px;
-                            border: 1px solid black; color: #000; font-weight: bold;"),
-    )
-  )
-
-
+  shinyjs::useShinyjs()
+  shiny::uiOutput(ns("ui"))
 
 }
 
@@ -69,6 +42,58 @@ ui <- function(id){
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
+
+    current_token <- shiny::reactive({
+      token <- shiny.router::get_query_param("token", session)
+      if(is.null(token)){
+        token <- "404"
+      }else{
+        token <- token
+      }
+      token
+    })
+    output$ui <- shiny::renderUI({
+      ############# Decode JWT
+      token_json_data <- jose::jwt_decode_hmac(current_token(), secret = import_data$key)
+
+      ############ Detect validity time of token
+      converted_time <- as.POSIXct(token_json_data$exp, origin="1970-01-01", tz="Africa/Lagos")
+
+      if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
+        Stack(
+          div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                     iconProps = list(iconName = "Refresh"),
+                                                     style = "float: left; height: 48px; top: 1px; margin: 5px;
+                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
+          tokens = list(childrenGap = 10), horizontal = TRUE,
+          cards$makeCard(div(class="text1",""
+                             #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
+          ),
+          #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
+          #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
+
+          div(style="max-height: 500px;", uiOutput(ns("table1")))),
+          div(class="margin_l"),
+          div(class="more_compare_page"),
+          div(class="margin_r"),
+          cards$makeCard(div(class="text1",""
+                             #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
+          ),
+          #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
+          #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
+          div(style="max-height: 500px;", uiOutput(ns("table2")))),
+
+          div(
+            shiny.fluent::Link(href=paste("#!/compare?token=", current_token(), sep = ""), "Zurückgehen",
+                               style = "float: right; background-color: #fff; text-decoration:none; padding: 1em 1.5em;
+                            text-align: center; border-color: #000; border-radius: 12px;
+                            border: 1px solid black; color: #000; font-weight: bold;"),
+          )
+        )
+      } else{
+        shiny::h3("Error 500 - Internal Server Error")
+      }
+    })
 
     output$date1 <- shiny::renderText({
       date <- as.Date(date1()) + 1
