@@ -78,14 +78,12 @@ home_layout <- function(home_data_overview,home_recent) {
 
 #' @export
 quantitative_page_layout <- function(head, tl_card, bl_card, middle_card,mid_card, tr_card, br_card, mid_b_card, mid_b_card1){#, token) {#mid_card
-  column_options <- c('column 1', 'column 2', 'column 3')
 
   div(class = "quantitative_page",
       head,
       div(class = "head_section",
           h1(class = "quantitative_page__title", ""), #Quantitative statistics
-          div( style = "float: right; display: flex; gap: 0.5rem;",
-          ),
+
       ),
       div(class = "quantitative_page__content",
           div(class = "grid-item", tl_card),

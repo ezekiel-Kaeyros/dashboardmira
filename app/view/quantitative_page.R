@@ -48,18 +48,18 @@ server <- function(id) {
 
       if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
         layouts$quantitative_page_layout(
-          div(style="display: flex;justify-content: space-between;", #class = "head_section",
+          div(style="display: flex;justify-content: space-between;  align-items: center; width:100%;", #class = "head_section",
               #h1(class = "quantitative_page__title", ""), #Quantitative statistics
-              div(style="display: flex;", #gap: 0.1rem; align-items: center; float: right;
+              div(style="display: flex; align-items: center; gap:5px;", #gap: 0.1rem; align-items: center; float: right;
                   h3(style="margin-left:20px;","Identität auswählen: "),
-                  div(style="width: 200px; margin-top: 15px; margin-left:10px",
+                  div(style="width: 200px; ",
                       shiny.fluent::Dropdown.shinyInput(ns("filter"),
                                                         value = import_data$options_filter[[1]]$key,
                                                         options = import_data$options_filter
                       ))
               ),
               div(
-                style = "display: flex; gap: 0.1rem; align-items: center; float: right;",
+                style = "display: flex; gap: 0.1rem; align-items: center; ",
                 div(#style = "float: right;  gap: 0.5rem; margin-top: 10px;",#28px
                   shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
                                                          iconProps = list(iconName = "Refresh"),
