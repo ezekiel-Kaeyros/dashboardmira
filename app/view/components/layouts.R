@@ -96,12 +96,12 @@ quantitative_page_layout <- function(head, tl_card, bl_card, middle_card,mid_car
             class = "grid-item",
             #style = "grid-column: span 2; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto;",
             middle_card
-            ),
+          ),
           div(
             class = "grid-item",
             mid_b_card1
           )
-        )
+      )
   )
 }
 

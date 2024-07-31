@@ -48,7 +48,7 @@ server <- function(id) {
 
       if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
         layouts$quantitative_page_layout(
-          div(style="display: flex;justify-content: space-between;  align-items: center; width:100%;", #class = "head_section",
+          div(style="display: flex;justify-content: space-between;  align-items: center; width:100%; flex-wrap: wrap;", #class = "head_section",
               #h1(class = "quantitative_page__title", ""), #Quantitative statistics
               div(style="display: flex; align-items: center; gap:5px;", #gap: 0.1rem; align-items: center; float: right;
                   h3(style="margin-left:20px;","Identität auswählen: "),
@@ -89,10 +89,10 @@ server <- function(id) {
               )
           ),
 
-        affected_person$ui(ns("affected_person")), age_of_affected_person$ui(ns("age_of_affected_person")),
-        map$ui(ns("map")),location_f$ui(ns("location_f")),gender_identity$ui(ns("gender_identity")),
-        date_of_occurance$ui(ns("date_of_occurance")), previous_measures$ui(ns("previous_measures")),
-        area_location$ui(ns("area_location")))#, current_token()) #,location$ui(ns("location"))
+          affected_person$ui(ns("affected_person")), age_of_affected_person$ui(ns("age_of_affected_person")),
+          map$ui(ns("map")),location_f$ui(ns("location_f")),gender_identity$ui(ns("gender_identity")),
+          date_of_occurance$ui(ns("date_of_occurance")), previous_measures$ui(ns("previous_measures")),
+          area_location$ui(ns("area_location")))#, current_token()) #,location$ui(ns("location"))
       } else{
         shiny::h3("Error 500 - Internal Server Error")
       }
