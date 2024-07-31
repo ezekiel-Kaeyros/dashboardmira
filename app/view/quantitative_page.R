@@ -47,22 +47,52 @@ server <- function(id) {
       converted_time <- as.POSIXct(token_json_data$exp, origin="1970-01-01", tz="Africa/Lagos")
 
       if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
-        layouts$quantitative_page_layout(div(class = "head_section",
-                                             #h1(class = "quantitative_page__title", ""), #Quantitative statistics
-                                             div(style="display: flex",
-                                                 h3("Filter by identity:", style="font-family: 'Times New Roman', sans-serif; font-size: 1.25em; color: #333; margin-right: 10px;"),
-                                                 div(style="width: 200px; margin-top: 15px",
-                                                     Dropdown.shinyInput(ns("filter"),
-                                                                         value = import_data$options_filter[[1]]$key,
-                                                                         options = import_data$options_filter
-                                                     ))
-                                             ),
-        ),
+        layouts$quantitative_page_layout(
+          div(style="display: flex;justify-content: space-between;", #class = "head_section",
+              #h1(class = "quantitative_page__title", ""), #Quantitative statistics
+              div(style="display: flex;", #gap: 0.1rem; align-items: center; float: right;
+                  h3(style="margin-left:20px;","Identität auswählen: "),
+                  div(style="width: 200px; margin-top: 15px; margin-left:10px",
+                      shiny.fluent::Dropdown.shinyInput(ns("filter"),
+                                                        value = import_data$options_filter[[1]]$key,
+                                                        options = import_data$options_filter
+                      ))
+              ),
+              div(
+                style = "display: flex; gap: 0.1rem; align-items: center; float: right;",
+                div(#style = "float: right;  gap: 0.5rem; margin-top: 10px;",#28px
+                  shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                         iconProps = list(iconName = "Refresh"),
+                                                         style = "background-color: #000; text-decoration:none; padding: 1.5em 1.5em;
+                            text-align: center; border-color: #fff; border-radius: 12px;
+                            border: 1px solid black;height:60px;
+                           color: #fff; font-weight: bold;"
+                  )),
+                shiny.fluent::Link(
+                  href = paste("#!/quantitative_bivariate?token=", current_token(), sep = ""),
+                  "Weiter zu Bivariate",
+                  style = "background-color: #000; text-decoration: none; padding: 1.5em 1.5em;
+             text-align: center; border-color: #fff; border-radius: 12px;
+             border: 1px solid black; color: #fff; font-weight: bold; margin-top:50px; margin-left:5px"
+                ),
+                shiny.fluent::DefaultButton.shinyInput(
+                  "export_quantitative",
+                  "Daten exportieren",
+                  iconProps = list(iconName = "Download"),
+                  style="margin-top:15px"
+                  # iconProps = list(
+                  #   imageProps = list(
+                  #     src = "www/logo.svg", # Path to your image
+                  #     style = list(width = "16px", height = "16px") # Adjust as necessary
+                  #   ))
+                ),
+              )
+          ),
 
         affected_person$ui(ns("affected_person")), age_of_affected_person$ui(ns("age_of_affected_person")),
         map$ui(ns("map")),location_f$ui(ns("location_f")),gender_identity$ui(ns("gender_identity")),
         date_of_occurance$ui(ns("date_of_occurance")), previous_measures$ui(ns("previous_measures")),
-        area_location$ui(ns("area_location")), current_token()) #,location$ui(ns("location"))
+        area_location$ui(ns("area_location")))#, current_token()) #,location$ui(ns("location"))
       } else{
         shiny::h3("Error 500 - Internal Server Error")
       }

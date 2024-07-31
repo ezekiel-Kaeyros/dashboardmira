@@ -46,9 +46,23 @@ server <- function(id) {
 
       if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role &
          converted_time > Sys.time()){
-        tagList(
-          layouts$qualitative_layout(htmlOutput(ns('myChart')), current_token())
-        )
+
+        div(style = "background-color: #f6f6f6;",
+            tagList(
+              div(style = "justify-content: flex-end; align-items: center; gap: 0.5rem;  margin-right: 35px; display: flex; ",
+                  shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
+                                                         iconProps = list(iconName = "Refresh"),
+                                                         style = "height: 62px; margin: 5px; background-color: #000; color: #fff; border-radius: 12px; display: flex; align-items: center;"),
+                  shiny.fluent::Link(href=paste("#!/wordcloud?token=", current_token(), sep = ""), "Siehe Wordcloud",
+                                     style = "background-color: #000; text-decoration:none; padding: 1.5em 1.5em; text-align: center; border-color: #000; border-radius: 12px; border: 1px solid black; color: #fff; font-weight: bold; display: flex; align-items: center;"),
+                  shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Daten exportieren", style = "margin-top: 10px;",
+                                                         iconProps = list(iconName = "Download"))),
+
+              div(style = "height: 3em;"),
+              layouts$qualitative_layout(htmlOutput(ns('myChart')))
+            )
+          )
+
       } else{
         shiny::h3("Error 500 - Internal Server Error")
       }
@@ -62,7 +76,7 @@ server <- function(id) {
       #addResourcePath("lda", "C:/Users/LENOVO/Desktop/Projets/antid_rhino/antid/anti-d-dashboard/Topic_modelling")
       addResourcePath("lda", route)
       url = "lda/index.html"
-      lda <- tags$iframe(src=url, height=700, width=1200)
+      lda <- tags$iframe(src=url, height=890, width=1300)
       lda
     })
 

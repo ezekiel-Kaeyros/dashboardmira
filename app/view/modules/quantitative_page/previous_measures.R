@@ -103,12 +103,11 @@ server <- function(id, filter) {
               values= ~Freq, type="pie",
               hoverinfo = 'text',
               textinfo = 'label+percent',
-              insidetextfont = list(color = '#FFFFFF'),
+              texttemplate = '<b>%{label}</br></br>%{percent}</b>',
+              insidetextfont = list(color = '#000',size = 8),
               text = ~paste("Aktion:", Var1,
                             "<br>Anzahl der Personen:", Freq,
                             "<br>Prozentsatz:", pct1),
-              # marker = list(colors = c("#5072A7", "#1D428A","#0000ff","#7630ff","#20B2AA"),
-              #               line = list(color = '#FFFFFF', width = 1),showlegend = FALSE)) %>%
               marker = list(colors = c("#F9AFC5", "#F9AFC5","#F9AFC5","#F9AFC5","#F9AFC5"),
                             line = list(color = '#FFFFFF', width = 1),showlegend = FALSE)) %>%
         layout(title="",

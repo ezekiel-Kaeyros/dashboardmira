@@ -57,7 +57,7 @@ recent_card <- function(id, url, date) {
 
 #' @export
 card_ui <- function(title, actionBtn ,content) {
-  div(class = "card",
+  div(class = "card", style = "background-color: #ffffff;",
     tagList(
       div(class = "card__header",
         h1(class = "title", title),

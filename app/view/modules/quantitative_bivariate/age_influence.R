@@ -36,7 +36,9 @@ server <- function(id) {
     #ns <- NS(id)
     #output$plot_personaf <- render
     button_state <- reactiveVal(FALSE)
-    yiord_palette <- c("#FFFFCC", "#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#BD0026", "#800026")
+    yiord_palette <- c("#fecbb3", "#feb999", "#fea880", "#fe9667", "#fe854d",
+                       "#fd7334", "#fd621a", "#fd5001", "#e44801", "#ca4001", "#b13801", "#983001", "#7f2801",
+                       "#652000", "#4c1800")
 
     observeEvent(input$toggleButton, {
       button_state(!button_state())

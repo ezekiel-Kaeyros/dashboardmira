@@ -5,7 +5,7 @@ box::use(
   shiny[div, tags, NS, moduleServer, tagList, h2, h5, p, actionButton,h3,
         reactiveVal, observeEvent, radioButtons,showModal,basicPage,reactiveValues,
         modalDialog,modalButton, uiOutput, renderUI,removeModal,fluidRow,column,reactive,
-        tableOutput, renderTable, HTML],
+        tableOutput, renderTable, HTML, img],
   htmltools[tagList],lubridate,
   magrittr[`%>%`],dplyr,htmltools,
   reactable[reactableOutput, renderReactable, reactable], plotly[config,layout]
@@ -59,37 +59,39 @@ server <- function(id) {
       ############ Detect validity time of token
       converted_time <- as.POSIXct(token_json_data$exp, origin="1970-01-01", tz="Africa/Lagos")
 
+
+
       if(token_json_data$email %in% import_data$login_data$email & token_json_data$role == import_data$role & converted_time > Sys.time()){
         Stack(
-          div(shiny.fluent::DefaultButton.shinyInput("refresh", "Daten aktualisieren",
-                                                     iconProps = list(iconName = "Refresh"),
-                                                     style = "float: left; height: 48px; top: 1px; margin: 5px;
-                                           background-color: #2B8049; color: #fff; border-radius: 12px;")),
-          tokens = list(childrenGap = 10), horizontal = TRUE,
-          cards$makeCard(div(class="text1",""
-                             #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
-          ),
-          #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-          #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
+          tokens = list(childrenGap = 10),
+          styles = list(root = list(backgroundColor = "#f6f6f6")),
+          div(style="display: flex; background-color:  #f6f6f6; text-decoration:none; padding: 1em 1.5em;
+                            text-align: center; font-weight: bold;", class="goback_img",
+              div(img(src = "Shape.svg")),#horizontal = TRUE,
+              div(class="goback_link", style="margin-left: 10px;",
+                  #style="font-weight: bold; margin-left: 6px",
+                  shiny.fluent::Link(href=paste("#!/compare?token=", current_token(), sep = ""), "Zurückgehen")
+              )),
+          tags$br(),
 
-          div(style="max-height: 500px;", uiOutput(ns("table1")))),
-          div(class="margin_l"),
-          div(class="more_compare_page"),
-          div(class="margin_r"),
-          cards$makeCard(div(class="text1",""
-                             #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
-          ),
-          #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-          #paste("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3"))),
-          div(style="max-height: 500px;", uiOutput(ns("table2")))),
+          div(class = "more_compare_chart",
+              cards$makeCard(div(class="text1",""
+                                 #Text("From ",shiny::textOutput(ns("date1")), "to ", shiny::textOutput(ns("date3")))
+              ),
+              div( style = "background-color:  #fff",
+                   uiOutput(ns("table1")))
+              ),
+              div(class="margin_l"),
+              div(class="line"),
+              div(class="margin_r"),
+              cards$makeCard(div(class="text1",""
+              ),
+              div( style = "background-color:  #fff",
+                   uiOutput(ns("table2")))) #overflow: auto #style="max-height: 400px;"
+          ))
 
-          div(
-            shiny.fluent::Link(href=paste("#!/compare?token=", current_token(), sep = ""), "Zurückgehen",
-                               style = "float: right; background-color: #fff; text-decoration:none; padding: 1em 1.5em;
-                            text-align: center; border-color: #000; border-radius: 12px;
-                            border: 1px solid black; color: #000; font-weight: bold;"),
-          )
-        )
+
+
       } else{
         shiny::h3("Error 500 - Internal Server Error")
       }

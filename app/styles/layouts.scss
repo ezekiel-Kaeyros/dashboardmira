@@ -1,6 +1,8 @@
 .quantitative_page {
+  background-color: #f6f6f6;
   height: auto;
   max-width: auto;
+  padding: 10px; /* Padding pour l'espacement */
 }
 
 .quantitative_page__title {
@@ -10,76 +12,125 @@
 
 .quantitative_page__content {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto; /* Ajuster la hauteur automatiquement */
-  grid-gap: 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /*grid-auto-rows: auto;  Ajuster la hauteur automatiquement */
+  grid-gap: 10px;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin: auto;
+
+    width: 100%;
+  }
 }
 
 .grid-item {
   /*border: 1px solid #ccc;*/
   padding: 20px;
-  text-align: left;
-  width: auto; /* Faire en sorte que toutes les divs aient la même largeur */
+  /*text-align: left;*/
+  /*width: auto;  Faire en sorte que toutes les divs aient la même largeur */
 }
+
+.filter_quantitative{
+  @media(max-width: 1200px){
+    column-gap: 10px !important;
+  }
+}
+
+.name_filter_quantitative{
+  @media(max-width: 1200px){
+  }
+}
+
 
 
 .quantitative_bivariate {
-  height: 100%;
-  max-width: 100%;
+  background-color: #f6f6f6;
+  height: auto;
+  max-width: auto;
+  padding: 10px; /* Padding pour l'espacement */
 
   &__title {
     font-size: 22px;
     font-weight: bold;
   }
-  &__content {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    height: inherit;
 
-    .quantitative_bivariate_left {
-      display: flex;
-      flex-direction: column;
-      row-gap: 1rem;
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 10px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      margin: auto;
       width: 100%;
-      height: 100%;
     }
 
-    .quantitative_bivariate_right {
+    .quantitative_bivariate_left, .quantitative_bivariate_right {
       display: flex;
       flex-direction: column;
       row-gap: 1rem;
-      height: 100%;
       width: 100%;
+      height: auto; /* Adjust height to auto for responsiveness */
     }
   }
 }
 
+
+
+
+#qualitative-myChart{
+  background-color: #ffffff !important;
+  margin-left: 100px;
+  margin-right: 100px;
+  display: flex;
+  justify-content: center;
+}
 .qualitative_page {
   display: flex;
-  height: 100%;
+  flex-direction: column; /* Align items in a column for smaller screens */
+  height: auto; /* Change to auto for responsiveness */
   max-width: 100%;
+  padding: 10px; /* Padding for spacing */
+  overflow: auto;
 
   &__title {
     font-size: 22px;
     font-weight: bold;
+    text-align: center; /* Center title for better appearance */
   }
+
   &__content {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     gap: 2rem;
-    height: inherit;
+    height: auto; /* Change to auto for responsiveness */
+    width: 100%;
 
     .qualitative_page_middle {
       display: flex;
-      flex-direction: column;
-      row-gap: 1rem;
-      height: 100%;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      column-gap: 1rem; /* Space between columns */
+      height: auto; /* Adjust height to auto for responsiveness */
       width: 100%;
     }
+  }
 
+  @media (max-width: 1200px) {
+    &__content {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+      gap: 1rem; /* Adjust gap for smaller screens */
+    }
+
+    .qualitative_page_middle {
+      flex-direction: column; /* Stack middle section items vertically */
+      align-items: center; /* Center items */
+      row-gap: 1rem; /* Space between rows */
+    }
   }
 }
+
 
 .head_section{
   display: flex;
@@ -103,3 +154,54 @@
   color: #fff;
   border-radius: 12px;
 }
+
+.compare_page {
+  background-color: #f6f6f6;
+}
+
+.more_compare_chart {
+  display: flex;
+  padding: 50px;
+}
+
+@media (max-width: 1200px) {
+  .more_compare_chart {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    gap: 1rem; /* Adjust gap for smaller screens */
+    width: auto;
+  }
+
+  .more_compare_chart > div {
+    width: auto; /* Ensure child divs have automatic width */
+  }
+}
+
+.ms-Fabric{
+    background-color: #f6f6f6;
+}
+
+
+/* Style général pour les éléments avec la classe 'card' */
+.card {
+  background-color: #ffffff; /* Couleur de fond blanche */
+  border-radius: 12px; /* Bords arrondis */
+  padding: 1rem; /* Espacement interne */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour donner un effet de profondeur */
+}
+
+/* Style spécifique pour la profondeur ms-depth-8 */
+.ms-depth-8 {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée */
+}
+
+/* Style spécifique pour la taille ms-sm5 */
+.ms-sm5 {
+  width: 20%; /* Exemple : définir une largeur de 20% pour les petits écrans */
+}
+
+/* Style spécifique pour la taille ms-xl5 */
+.ms-xl5 {
+  width: 50%; /* Exemple : définir une largeur de 50% pour les grands écrans */
+}
+
+
