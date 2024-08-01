@@ -124,7 +124,7 @@ quantitative_bivariate_layout <- function(tl_card, bl_card,tr_card, br_card, tok
                                   style = "background-color: #000; text-decoration:none; padding: 1.5em 1.5em;
                                   border-color: #fff; border-radius: 12px; border: 1px solid black;
                            color: #fff; font-weight: bold; display: flex;"),
-               shiny.fluent::DefaultButton.shinyInput("export_bivariate", "Daten exportieren",
+               shiny.fluent::DefaultButton.shinyInput("export_quantitative", "Daten exportieren",
                                                       iconProps = list(iconName = "Download"))
           ),
       ),
