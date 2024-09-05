@@ -63,24 +63,26 @@ data$updatedAt <- as.Date(substr(data$updatedAt, 1, 10), format = "%Y-%m-%d")
 #data$updatedAt <- format(data$updatedAt, "%d.%m.%Y")
 
 
-startDate = c()
-endDate = c()
-for (i in 1:nrow(data)){
-  if (!is.null(data$dateRangeState[[i]][1])){
-    startDate = c(startDate, strsplit(unlist(data$dateRangeState), ",")[[i]][1])
-    endDate =  c(endDate, strsplit(unlist(data$dateRangeState), ",")[[i]][2])
-  } else {
-    startDate = c(startDate, NA)
-    endDate =  c(endDate, NA)
-  }
+# startDate = c()
+# endDate = c()
+# for (i in 1:nrow(data)){
+#   if (!is.null(data$dateRangeState[[i]][1])){
+#     startDate = c(startDate, strsplit(unlist(data$dateRangeState), ",")[[i]][1])
+#     endDate =  c(endDate, strsplit(unlist(data$dateRangeState), ",")[[i]][2])
+#   } else {
+#     startDate = c(startDate, NA)
+#     endDate =  c(endDate, NA)
+#   }
+#
+# }
+data$startDate <- sapply(strsplit(as.character(data$dateRangeState), ","), function(x) ifelse(length(x) > 1, x[1], NA))
+data$endDate <- sapply(strsplit(as.character(data$dateRangeState), ","), function(x) ifelse(length(x) > 1, x[2], NA))
 
-}
-
-data$startDate <- startDate
+#data$startDate <- startDate
 data$startDate <- as.Date(substr(data$startDate, 1, 10), format = "%Y-%m-%d")
 #data$startDate <- format(data$startDate, "%d.%m.%Y")
 
-data$endDate <- endDate
+#data$endDate <- endDate
 data$endDate <- as.Date(substr(data$endDate, 1, 10), format = "%Y-%m-%d")
 #data$endDate <- format(data$endDate, "%d.%m.%Y")
 
@@ -181,6 +183,10 @@ data$description[is.na(data$description)] <- "aber"
 ################## Data to generate map topic ##############
 file_save_lda_model <- paste(path_data, "lda_model.rds", sep="")
 file_save_prediction <- paste(path_data, "prediction.rds", sep="")
+
+# Supprimer les fichiers
+file.remove(file_save_lda_model)
+file.remove(file_save_prediction)
 
 # Vérifier si les fichiers existent
 if (!file.exists(file_save_lda_model) || !file.exists(file_save_prediction)) {

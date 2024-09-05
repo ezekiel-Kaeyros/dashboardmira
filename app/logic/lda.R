@@ -24,7 +24,10 @@ if (!dir.exists(route)) {
   sotu_corpus <- corpus(import_data$data$description)
   corp = corpus_reshape(sotu_corpus, to = "sentences")
   #corp = corpus_reshape(data_corpus_inaugural, to = "paragraphs")
-  dfm = dfm(corp, remove_punct=T, remove=stopwords("german"))
+  #dfm = dfm(corp, remove_punct=T, remove=stopwords("german"))
+
+  dfm = quanteda::dfm_select(dfm(quanteda::tokens(corp,remove_punct=T)), selection = "remove",pattern = stopwords("german"))
+
   dfm = dfm_trim(dfm, min_docfreq = 5)
 
   dtm = convert(dfm, to = "topicmodels")

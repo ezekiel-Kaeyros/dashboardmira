@@ -16,4 +16,5 @@ previous_measures <- function(filter){
   previous_measures <- previous_measures %>%
     dplyr::mutate(percentage = round(100*(Freq/sum(Freq)),2),
                   pct1 = paste0(percentage, "%"))
+  return(previous_measures)
 }

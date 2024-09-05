@@ -26,3 +26,4 @@ TDM <- TermDocumentMatrix(text_f)
 m <- as.matrix(TDM)
 v <- sort(rowSums(m),decreasing=TRUE)
 data_wordcloud <- data.frame(word = names(v),freq=v)
+
